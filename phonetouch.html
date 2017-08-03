@@ -1,0 +1,116 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0",user-scalable="no">
+    <style>
+    .demo{
+        width:200px;
+        height: 200px;
+        background-color: pink;
+        position: absolute;
+        top:0;
+    }
+    </style>
+</head>
+<body>
+    <a href="http://www.baidu.com">baidu</a>
+    <div class="demo" id="demo"></div>
+</body>
+</html>
+<script>
+    var odiv = document.querySelector("#demo");
+    document.addEventListener("touchstart", function(ev){
+        console.log("touchstart");
+        ev.preventDefault();
+    })
+    odiv.addEventListener("touchmove",function(ev){
+        odiv.innerHTML = ev.changedTouches.length;
+    });
+    document.addEventListener("touchend",function(){
+        console.log("touchend");
+    })
+    odiv.addEventListener("touend",function(){
+
+    })
+</script> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>移动端拖拽</title>
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0"/>
+    <script>
+        document.documentElement.style.fontSize = innerWidth/16+'px';
+    </script>
+    <style>
+        *{
+            -webkit-box-sizing:border-box;
+        }
+        html,body{
+            margin: 0;
+            padding: 0;
+            width:100%;
+            height:100%;
+        }
+        .comtainer{
+            width:100%;
+            height:400px;
+            position:relative;
+        }
+        ul{
+            padding:0;
+            margin:0;
+            list-style: none;
+            width:400%;
+            height:400px;
+            position:absolute;
+        }
+        ul li{
+            width:25%;
+            float: left;
+            height:400px;
+            background-color: pink;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <ul id="list">
+            <li>01</li>
+            <li>02</li>
+            <li>03</li>
+            <li>04</li>
+        </ul>
+    </div>
+    <script>
+    function getstyle(obj,attr){
+        return getComputedStyle(obj,null)[attr];
+    }
+    var list = document.getElementById("list");
+    var lis = list.getElementsByTagName("li");
+    var w = parseInt(getstyle(lis[0],"width"));
+    var oleft = 0;
+    var a = 0;
+    list.addEventListener("touchstart", function(ev){
+        ev.preventDefault();
+        var ex = ev.changedTouches[0].pageX;
+        oleft = this.offsetLeft;
+
+        list.addEventListener("touchmove", function(ev){
+            var dis = ev.changedTouches[0].pageX-ex;
+            list.style.left = oleft+dis+"px";
+        })
+        list.addEventListener("touchend", function(ev){
+            console.log(this.offsetLeft);
+            b = Math.round(this.offsetLeft/w);
+            list.style.left = b*w+"px";
+        })
+    })
+    </script>
+</body>
+</html>
